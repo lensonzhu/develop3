@@ -15,7 +15,7 @@
 
 {# make a form and submit #}
 {% block page_content %}
-<div class="page-header">
+{#<div class="page-header">
     <h1>hello, 
         {% if name %}{{ name }}
         {% else %}Stranger
@@ -26,8 +26,17 @@
     {% else %}
     <p>Nice to meet you again !</p>
     {% endif %}
-</div>
+</div>#}
 {{ wtf.quick_form(form) }}
+
+
+<div class="page-header">
+    <h1>Hello,
+        {% if current_user.is_authenticated %}{{ current_user.username }}
+        {% else %}Stranger
+        {%  endif %}
+    </h1>
+</div>
 {% endblock %}
 
 
