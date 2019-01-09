@@ -1,0 +1,6 @@
+Wecome to Fkasky!
+To confirm your accout please click on the following link:
+{{ url_for('auth.confirm',tolen=token,_external=True) }}
+Sincerely,
+The Flasky Team
+Note:replies to this email address are not monitored.
