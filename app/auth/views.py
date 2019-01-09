@@ -6,7 +6,7 @@ from ..email import send_email
 from . forms import LoginForm,RegistrationForm
 from flask_login import login_user,logout_user,login_required,current_user
 
-@auth.route('/resend_confirmation')
+@auth.route('/confirm')
 @login_required
 def resend_confirmation():
     token=current_user.generate_confirmation_token()
@@ -32,10 +32,10 @@ def unconfirmed():
 def confirm(token):
     if current_user.confirmed:
         return redirect(url_for('main.index'))
-    if current_user.confirmed(token):
+    if current_user.confirm(token):
         flash('You have confirmed your account.Thanks!')
     else:
-        flash('The confirmation link is invalid or ha expired')
+        flash('The confirmation link is invalid or has expired')
     return redirect(url_for('main.index'))
 
 

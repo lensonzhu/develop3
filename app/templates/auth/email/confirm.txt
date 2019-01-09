@@ -1,5 +1,5 @@
 Dear {{ user.username }}
-Wecome to Fkasky!
+Welcome to Fkasky!
 To confirm your accout please click on the following link:
 {{ url_for('auth.confirm',token=token,_external=True) }}
 Sincerely,
