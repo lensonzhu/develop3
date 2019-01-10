@@ -3,8 +3,29 @@ from . import auth
 from .. import db
 from .. models import User
 from ..email import send_email
-from . forms import LoginForm,RegistrationForm
+from . forms import LoginForm,RegistrationForm,ChangePasswordForm
 from flask_login import login_user,logout_user,login_required,current_user
+
+
+@auth.route('/update_password',methods=['GET','POST'])
+@login_required
+def update_password():
+    form=ChangePasswordForm()
+    if form.validate_on_submit():
+        #print('pass_validate=============',form)
+        if current_user.verify_password(form.old_password.data):
+            current_user.password=form.password.data
+            db.session.add(current_user)
+            logout_user()
+            #print('add_user_success===============',current_user)
+            flash('Your password has been updated.')
+            return redirect(url_for('auth.login'))
+
+        flash('Invalid password try again')
+        return redirect(url_for('main.index'))
+    print('form========')
+    return render_template('auth/update_password.html',form=form)
+
 
 @auth.route('/confirm')
 @login_required
@@ -24,6 +45,7 @@ def before_request():
 def unconfirmed():
     if current_user.is_anonymous or current_user.confirmed:
         return redirect(url_for('main.index'))
+    print('unconfirmed============')
     return render_template('auth/unconfirmed.html')
 
 
@@ -66,8 +88,9 @@ def login():
            # print('=========user=',user)
 
             login_user(user,form.remember_me.data)
-            print('--------',user)
+            print('--------',user.email)
             return redirect(request.args.get('next') or url_for('main.index'))
+        #print('Invalid username or password.')
         flash('Invalid username or password.')
     return render_template('auth/login.html',form=form)
 
