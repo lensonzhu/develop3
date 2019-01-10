@@ -11,7 +11,7 @@
 <div class="navbar navbar-inverse" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-            toggle="collapse" data-target=".navbar-collapse">
+            <button type="button" class="navbar-toggle" data- toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -21,14 +21,24 @@
         </div>
         <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('main.index') }}">Home</a></li>
+                <li>
+                <a href="{{ url_for('main.index') }}">Home</a>
+                </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if current_user.is_authenticated %}
-                    <li><a href="{{ url_for('auth.update_password') }}">Changer password</a></li>
-                    <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+                    <li class="dropdown">
+<a href="{{ url_for('auth.update_password') }}">Changer password</a>
+                    </li>
+                    <li>
+<a href="{{ url_for('auth.logout') }}">Log Out</a>
+                    </li>
+                </ul>
                     {% else %}
-                    <li><a href="{{ url_for('auth.login')         }}">Sign In</a></li>
+                <ul>
+                <li>
+<a href="{{ url_for('auth.login')}}">Sign In</a>
+                </li>
                     {% endif %}
                 </ul>
         </div>

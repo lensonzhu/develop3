@@ -5,6 +5,21 @@ from wtforms import ValidationError
 from .. models import User
 
 
+class ResetPasswordRequestForm(FlaskForm):
+    email=StringField('Email',validators=[Required(),Length(1,64),Email()])
+    submit=SubmitField('Reset Password')
+
+
+class ResetPasswordForm(FlaskForm):
+    email=StringField('Email',validators=[Required(),Length(1,64)])
+    password=PasswordField('New password',validators=[Required(),EqualTo('password2',message='Password must be mach')])
+    password2=PasswordField('Confirm password',validators=[Required()])
+    submit=SubmitField('Reset Password')
+
+    def validator_email(self,field):
+        if User.query.filter_by(email=field.data).first() is None:
+            raise ValidationError('Unknown email address')
+
 
 class ChangePasswordForm(FlaskForm):
     old_password=PasswordField('Old password',validators=[Required()])
