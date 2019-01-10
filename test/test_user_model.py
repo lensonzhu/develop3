@@ -20,3 +20,14 @@ class UserModelTestCase(unittest.TestCase):
         u2=User(password='ggsmd')
         self.assertTrue(u.password_hash!=u2.password_hash)
 
+    def test_roles_permissions(self):
+        Role.updata_roles()
+        u=User(email='lensonzhu@163.com',password='zhulunchen111')
+        self.assertTrue(u.can(Permission.WRITE_ARTCLES))
+        self.assertFalse(u.can(Permission.MODERATE_COMMENTS))
+
+    def test_anonymous_user(self):
+        u=AnonymousUser()
+        self.assertFalse(u.can(Permission.FOLLOW))
+
+
