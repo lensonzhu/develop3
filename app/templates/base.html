@@ -27,6 +27,9 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if current_user.is_authenticated %}
+                    <li>
+<a href="{{ url_for('auth.change_email_request') }}">Fuck here to change your Life</a>
+                    </li>
                     <li class="dropdown">
 <a href="{{ url_for('auth.update_password') }}">Changer password</a>
                     </li>
@@ -52,7 +55,7 @@
         <div class="alert alert-warning">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
         
-        {{ emssage }}
+        {{ message }}
         </div>
         {% endfor %}
 

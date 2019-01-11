@@ -5,6 +5,15 @@ from wtforms import ValidationError
 from .. models import User
 
 
+class ChangeEmailForm(FlaskForm):
+    email=StringField('Fuck here change New email',validators=[Required(),Length(1,64),Email()])
+    password=PasswordField('Password ',validators=[Required()])
+    submit=SubmitField('Fuck Here Change')
+
+    def validate_email(self,field):
+        if User.query.filter_by(email=field.data).first():
+            raise ValidationError('Email already reqistered')
+
 class ResetPasswordRequestForm(FlaskForm):
     email=StringField('Email',validators=[Required(),Length(1,64),Email()])
     submit=SubmitField('Reset Password')
